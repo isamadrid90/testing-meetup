@@ -1,0 +1,23 @@
+{
+    "name": "isabelgarrido/testing-meetup",
+    "authors": [
+        {
+            "name": "isabel garrido",
+            "email": "isa.madrid90@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "phpunit/phpunit": "^7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "DoublesMeetup\\": "src\\"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "test\\"
+        }
+    }
+}
