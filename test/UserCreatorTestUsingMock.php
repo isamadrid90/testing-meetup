@@ -13,10 +13,10 @@ class UserCreatorTestUsingMock extends TestCase
     /**
      * @test
      */
-    public function should_create_new_user_when_username_valid_using_mock()
+    public function shouldCreateNewUserWhenUsernameValidUsingMock()
     {
         $userRepository = new UserRepositoryDummy();
-        $userValidator = new UsernameValidatorMock($userRepository);
+        $userValidator = new UsernameValidatorMock();
         $userCreator = new UserCreator($userValidator, $userRepository);
 
         $createdUser = $userCreator->create('username', 'password');
