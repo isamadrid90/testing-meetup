@@ -12,7 +12,7 @@ class UserCreatorTestUsingSpy extends TestCase
     /**
      * @test
      */
-    public function should_create_new_user_when_username_valid_using_spy()
+    public function shouldCreateNewUserWhenUsernameValidUsingSpy()
     {
         $userRepository = new UserRepositoryDummy();
         $userValidator = new UsernameValidatorValidSpy($userRepository);
