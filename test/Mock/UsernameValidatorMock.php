@@ -10,11 +10,6 @@ class UsernameValidatorMock implements UsernameValidator
 
     private $validateWasCalled = false;
 
-    public function __construct(UserRepository $repository)
-    {
-        // nothing to do here
-    }
-
     public function validate(string $username): bool
     {
         $this->validateWasCalled = true;
