@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Test\Dummy\UserRepositoryDummy;
 use Test\Mock\UsernameValidatorMock;
 
-class UserCreatorTestUsingMock extends TestCase
+class UserCreatorUsingMockTest extends TestCase
 {
     /**
      * @test

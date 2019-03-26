@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use Test\Dummy\UserRepositoryDummy;
 use Test\Spy\UsernameValidatorValidSpy;
 
-class UserCreatorTestUsingSpy extends TestCase
+class UserCreatorUsingSpyTest extends TestCase
 {
     /**
      * @test
