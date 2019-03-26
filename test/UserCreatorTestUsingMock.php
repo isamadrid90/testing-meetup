@@ -16,14 +16,11 @@ class UserCreatorTestUsingMock extends TestCase
     public function should_create_new_user_when_username_valid_using_mock()
     {
         $userRepository = new UserRepositoryDummy();
-        $userValidator = new UsernameValidatorMock($userRepository);
+        $userValidator = new UsernameValidatorMock();
         $userCreator = new UserCreator($userValidator, $userRepository);
 
-        $createdUser = $userCreator->create('username', 'password');
+        $userCreator->create('username', 'password');
 
-        $this->assertInstanceOf(User::class, $createdUser);
-        $this->assertEquals('username', $createdUser->username());
-        $this->assertEquals(sha1('password'), $createdUser->encodedPassword());
         $this->assertTrue($userValidator->verify());
     }
 }

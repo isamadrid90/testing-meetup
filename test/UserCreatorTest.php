@@ -36,6 +36,6 @@ class UserCreatorTest extends TestCase
         $createdUser = $userCreator->create('username', 'password');
 
         $this->assertEquals('username', $createdUser->username());
-        $this->assertEquals(sha1('password'), $createdUser->encodedPassword());
+        $this->assertEquals(sha1('password'), $createdUser->password());
     }
 }
