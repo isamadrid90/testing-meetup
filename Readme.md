@@ -19,4 +19,4 @@ Execution
 =========
 
 * `vendor/bin/phpunit test` to execute all the tests
-* `vendor/bin/phpunit test--filter test-name` to execute just one test
+* `vendor/bin/phpunit test --filter test-name` to execute just one test
