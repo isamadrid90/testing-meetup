@@ -19,5 +19,8 @@
         "psr-4": {
             "Test\\": "test\\"
         }
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.2"
     }
 }
