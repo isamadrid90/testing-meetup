@@ -5,7 +5,7 @@ namespace Test\Mock;
 use DoublesMeetup\UsernameValidator;
 use DoublesMeetup\UserRepository;
 
-class UsernameValidatorMock implements UsernameValidator
+class UsernameValidatorValidMock implements UsernameValidator
 {
 
     private $validateWasCalled = false;
