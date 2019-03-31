@@ -14,12 +14,12 @@ class UserCreatorTest extends TestCase
     /**
      * @test
      */
-    public function should_throw_exception_when_username_invalid()
+    public function shouldThrowExceptionWhenUsernameInvalid()
     {
         $this->expectException(\Exception::class);
 
         $userRepository = new UserRepositoryDummy();
-        $usernameValidator = new UsernameValidatorInvalidStub($userRepository);
+        $usernameValidator = new UsernameValidatorInvalidStub();
         $userCreator = new UserCreator($usernameValidator, $userRepository);
 
         $userCreator->create('username', 'password');
@@ -28,10 +28,10 @@ class UserCreatorTest extends TestCase
     /**
      * @test
      */
-    public function should_create_new_user_when_username_valid()
+    public function shouldCreateNewUserWhenUsernameValid()
     {
         $userRepository = new UserRepositoryDummy();
-        $usernameValidator = new UsernameValidatorValidStub($userRepository);
+        $usernameValidator = new UsernameValidatorValidStub();
         $userCreator = new UserCreator($usernameValidator, $userRepository);
         $createdUser = $userCreator->create('username', 'password');
 

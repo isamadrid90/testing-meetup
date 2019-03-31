@@ -7,7 +7,6 @@ use DoublesMeetup\UserRepository;
 
 class UsernameValidatorInvalidStub implements UsernameValidator
 {
-
     public function validate(string $username): bool
     {
         return false;

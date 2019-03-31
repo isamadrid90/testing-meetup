@@ -10,10 +10,8 @@ use Test\Stub\UsernameValidatorValidStub;
 
 class UserCreatorUsingFakeTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function should_create_new_user_when_username_valid_fake()
+    /** @test */
+    public function shouldCreateNewUserWhenUsernameValidFake()
     {
         $userRepository = new UserRepositoryInMemory();
         $usernameValidator = new UsernameValidatorValidStub();
