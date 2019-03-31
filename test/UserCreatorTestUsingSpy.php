@@ -23,6 +23,6 @@ class UserCreatorTestUsingSpy extends TestCase
         $this->assertInstanceOf(User::class, $createdUser);
         $this->assertEquals('username', $createdUser->username());
         $this->assertEquals(sha1('password'), $createdUser->encodedPassword());
-        $this->assertTrue($userValidator->validateWasCalled);
+        $this->assertTrue($userValidator->validateWasCalled());
     }
 }
