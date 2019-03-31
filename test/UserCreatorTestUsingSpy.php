@@ -5,7 +5,7 @@ use DoublesMeetup\User;
 use DoublesMeetup\UserCreator;
 use PHPUnit\Framework\TestCase;
 use Test\Dummy\UserRepositoryDummy;
-use Test\Spy\UsernameValidatorValidSpy;
+use Test\Spy\UsernameValidatorInvalidSpy;
 
 class UserCreatorTestUsingSpy extends TestCase
 {
@@ -15,7 +15,7 @@ class UserCreatorTestUsingSpy extends TestCase
     public function shouldCreateNewUserWhenUsernameValidUsingSpy()
     {
         $userRepository = new UserRepositoryDummy();
-        $userValidator = new UsernameValidatorValidSpy();
+        $userValidator = new UsernameValidatorInvalidSpy();
         $userCreator = new UserCreator($userValidator, $userRepository);
 
         $createdUser = $userCreator->create('username', 'password');
