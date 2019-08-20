@@ -2,33 +2,36 @@
 
 namespace DoublesMeetup;
 
-
-class UserCreator
+final class UserCreator
 {
     private $usernameValidator;
-
     private $userRepository;
+    private $userNotifier;
 
     public function __construct(
         UsernameValidator $usernameValidator,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        UserNotifier $userNotifier
     ) {
         $this->usernameValidator = $usernameValidator;
         $this->userRepository = $userRepository;
+        $this->userNotifier = $userNotifier;
     }
 
     /**
      * @throws \Exception
      */
-    public function create(string $username, string $password): User
+    public function create(string $username, string $password, string $email): User
     {
         if (false === $this->usernameValidator->validate($username)) {
             throw new \Exception(sprintf('Invalid username: %s', $username));
         }
 
-        $user = User::create($username, $password);
+        $user = User::create($username, $password, $email);
 
         $this->userRepository->save($user);
+
+        $this->userNotifier->sendWelcomeMessage($email);
 
         return $user;
     }

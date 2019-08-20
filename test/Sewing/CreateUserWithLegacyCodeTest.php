@@ -18,6 +18,6 @@ class CreateUserWithLegacyCodeTest extends TestCase
         $user = $userCreator->create('username', 'password');
 
         $this->assertEquals('username', $user->username());
-        $this->assertEquals(sha1('password'), $user->encodedPassword());
+        $this->assertEquals(sha1('password'), $user->password());
     }
 }

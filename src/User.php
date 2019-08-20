@@ -6,17 +6,19 @@ namespace DoublesMeetup;
 class User
 {
     private $username;
-    private $encodedPassword;
+    private $password;
+    private $email;
 
-    public function __construct(string $username, string $password)
+    public function __construct(string $username, string $plainPassword, string $email)
     {
         $this->username = $username;
-        $this->encodedPassword = sha1($password);
+        $this->password = sha1($plainPassword);
+        $this->email = $email;
     }
 
-    public static function create(string $username, string $password)
+    public static function create(string $username, string $plainPassword, string $email)
     {
-        return new self($username, $password);
+        return new self($username, $plainPassword, $email);
     }
 
     public function username(): string
@@ -24,8 +26,13 @@ class User
         return $this->username;
     }
 
-    public function encodedPassword(): string
+    public function password(): string
     {
-        return $this->encodedPassword;
+        return $this->password;
+    }
+
+    public function email(): string
+    {
+        return $this->email;
     }
 }

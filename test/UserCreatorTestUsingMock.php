@@ -6,24 +6,26 @@ use DoublesMeetup\User;
 use DoublesMeetup\UserCreator;
 use PHPUnit\Framework\TestCase;
 use Test\Dummy\UserRepositoryDummy;
-use Test\Mock\UsernameValidatorMock;
+use Test\Stub\UsernameValidatorValidStub;
 
 class UserCreatorTestUsingMock extends TestCase
 {
     /**
      * @test
      */
-    public function shouldCreateNewUserWhenUsernameValidUsingMock()
+    public function shouldCreateNewUserWhenUsernameValid()
     {
-        $userRepository = new UserRepositoryDummy();
-        $userValidator = new UsernameValidatorMock();
-        $userCreator = new UserCreator($userValidator, $userRepository);
+        $userRepository    = new UserRepositoryDummy();
+        $usernameValidator = new UsernameValidatorValidStub();
+        $userNotifier      = new UserNotifierMock();
+        $username          = 'username';
+        $plainPassword     = 'password';
+        $email             = 'email@email.com';
 
-        $createdUser = $userCreator->create('username', 'password');
+        $userCreator = new UserCreator($usernameValidator, $userRepository, $userNotifier);
+        $createdUser = $userCreator->create($username, $plainPassword, $email);
 
-        $this->assertInstanceOf(User::class, $createdUser);
-        $this->assertEquals('username', $createdUser->username());
-        $this->assertEquals(sha1('password'), $createdUser->encodedPassword());
-        $this->assertTrue($userValidator->verify());
+        $this->assertEquals(new User($username, $plainPassword, $email), $createdUser);
+        $this->assertTrue($userNotifier->verify());
     }
 }

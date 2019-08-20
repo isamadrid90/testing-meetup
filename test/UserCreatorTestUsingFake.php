@@ -22,6 +22,6 @@ class UserCreatorTestUsingFake extends TestCase
 
         $this->assertInstanceOf(User::class, $createdUser);
         $this->assertEquals('username', $createdUser->username());
-        $this->assertEquals(sha1('password'), $createdUser->encodedPassword());
+        $this->assertEquals(sha1('password'), $createdUser->password());
     }
 }

@@ -5,24 +5,27 @@ use DoublesMeetup\User;
 use DoublesMeetup\UserCreator;
 use PHPUnit\Framework\TestCase;
 use Test\Dummy\UserRepositoryDummy;
-use Test\Spy\UsernameValidatorValidSpy;
+use Test\Stub\UsernameValidatorValidStub;
 
-class UserCreatorTestUsingSpy extends TestCase
+class   UserCreatorTestUsingSpy extends TestCase
 {
     /**
      * @test
      */
-    public function shouldCreateNewUserWhenUsernameValidUsingSpy()
+    public function shouldCreateNewUserWhenUsernameValid()
     {
-        $userRepository = new UserRepositoryDummy();
-        $userValidator = new UsernameValidatorValidSpy();
-        $userCreator = new UserCreator($userValidator, $userRepository);
+        $userRepository    = new UserRepositoryDummy();
+        $usernameValidator = new UsernameValidatorValidStub();
+        $userNotifier      = new UserNotifierSpy();
+        $username          = 'username';
+        $plainPassword     = 'password';
+        $email             = 'email@email.com';
 
-        $createdUser = $userCreator->create('username', 'password');
+        $userCreator = new UserCreator($usernameValidator, $userRepository, $userNotifier);
+        $createdUser = $userCreator->create($username, $plainPassword, $email);
 
-        $this->assertInstanceOf(User::class, $createdUser);
-        $this->assertEquals('username', $createdUser->username());
-        $this->assertEquals(sha1('password'), $createdUser->encodedPassword());
-        $this->assertTrue($userValidator->validateWasCalled);
+        $this->assertEquals(new User($username, $plainPassword, $email), $createdUser);
+        $this->assertTrue($userNotifier->sendWelcomeMessageWasCalled());
+        $this->assertEquals($email, $userNotifier->emailUsed());
     }
 }
