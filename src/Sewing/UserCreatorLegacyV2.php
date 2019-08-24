@@ -16,13 +16,13 @@ class UserCreatorLegacyV2
     /**
      * @throws \Exception
      */
-    public function create(string $username, string $password): User
+    public function create(string $username, string $password, string $email): User
     {
         if (false === $this->validateUsername($username)) {
             throw new \Exception(sprintf('Invalid username: %s', $username));
         }
 
-        $user = User::create($username, $password);
+        $user = User::create($username, $password, $email);
 
         $this->save($user);
 

@@ -18,13 +18,13 @@ class UserCreatorLegacy
     /**
      * @throws \Exception
      */
-    public function create(string $username, string $password): User
+    public function create(string $username, string $password, string $email): User
     {
         if (null !== $this->container->get('repository.user')->findByUsername($username)) {
             throw new \Exception(sprintf('Invalid username: %s', $username));
         }
 
-        $user = User::create($username, $password);
+        $user = User::create($username, $password, $email);
 
         $this->container->get('repository.user')->save($user);
 
