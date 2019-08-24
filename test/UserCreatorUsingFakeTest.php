@@ -8,15 +8,16 @@ use PHPUnit\Framework\TestCase;
 use Test\Fake\UserRepositoryInMemory;
 use Test\Stub\UsernameValidatorValidStub;
 
-class UserCreatorTestUsingFake extends TestCase
+class UserCreatorUsingFakeTest extends TestCase
 {
     /** @test */
     public function shouldCreateNewUserWhenUsernameValidFake()
     {
         $userRepository = new UserRepositoryInMemory();
         $usernameValidator = new UsernameValidatorValidStub();
-        $userCreator = new UserCreator($usernameValidator, $userRepository);
-        $userCreator->create('username', 'password');
+        $userNotifier = new UserNotifierDummy();
+        $userCreator = new UserCreator($usernameValidator, $userRepository, $userNotifier);
+        $userCreator->create('username', 'password', 'email@email.com');
 
         $createdUser = $userRepository->findByUsername('username');
 

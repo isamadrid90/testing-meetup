@@ -15,7 +15,7 @@ class CreateUserWithLegacyCodeTest extends TestCase
     {
         $userCreator = new UserCreatorLegacyWithValidUsernameTest();
 
-        $user = $userCreator->create('username', 'password');
+        $user = $userCreator->create('username', 'password', 'email@email.com');
 
         $this->assertEquals('username', $user->username());
         $this->assertEquals(sha1('password'), $user->password());

@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Test\Dummy\UserRepositoryDummy;
 use Test\Stub\UsernameValidatorValidStub;
 
-class   UserCreatorTestUsingSpy extends TestCase
+class UserCreatorUsingSpyTest extends TestCase
 {
     /**
      * @test

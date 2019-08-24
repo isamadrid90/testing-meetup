@@ -10,7 +10,6 @@ use DoublesMeetup\UserRepository;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Test\Dummy\UserRepositoryDummy;
-use Test\Fake\UserRepositoryInMemory;
 use Test\Stub\UsernameValidatorInvalidStub;
 use Test\Stub\UsernameValidatorValidStub;
 

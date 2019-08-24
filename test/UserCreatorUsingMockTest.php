@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Test\Dummy\UserRepositoryDummy;
 use Test\Stub\UsernameValidatorValidStub;
 
-class UserCreatorTestUsingMock extends TestCase
+class UserCreatorUsingMockTest extends TestCase
 {
     /**
      * @test
