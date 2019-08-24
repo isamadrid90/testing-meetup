@@ -24,6 +24,4 @@ final class UserNotifierMock implements UserNotifier
     {
         return $this->correctEmail && (1 === $this->timesCalled);
     }
-
-
 }
