@@ -12,6 +12,8 @@ use Prophecy\Argument;
 use Test\Dummy\UserRepositoryDummy;
 use Test\Stub\UsernameValidatorInvalidStub;
 use Test\Stub\UsernameValidatorValidStub;
+use Test\Stub\UserRepositoryEmptyStub;
+use Test\Stub\UserRepositoryNotEmptyStub;
 
 class UserCreatorTest extends TestCase
 {
@@ -19,12 +21,27 @@ class UserCreatorTest extends TestCase
     /**
      * @test
      */
-    public function shouldThrowExceptionWhenUsernameInvalid()
+    public function shouldThrowExceptionWhenUsernameContainsSpecialCharacters()
     {
         $this->expectException(\Exception::class);
 
-        $userRepository    = new UserRepositoryDummy();
-        $usernameValidator = new UsernameValidatorInvalidStub();
+        $userRepository    = new UserRepositoryEmptyStub();
+        $usernameValidator = new UsernameValidator($userRepository);
+        $userNotifier      = new UserNotifierDummy();
+        $userCreator       = new UserCreator($usernameValidator, $userRepository, $userNotifier);
+
+        $userCreator->create('user$name', 'password', 'email@email.com');
+    }
+
+    /**
+     * @test
+     */
+    public function shouldThrowExceptionWhenUsernameAlreadyUsed()
+    {
+        $this->expectException(\Exception::class);
+
+        $userRepository    = new UserRepositoryNotEmptyStub();
+        $usernameValidator = new UsernameValidator($userRepository);
         $userNotifier      = new UserNotifierDummy();
         $userCreator       = new UserCreator($usernameValidator, $userRepository, $userNotifier);
 
@@ -36,10 +53,10 @@ class UserCreatorTest extends TestCase
      */
     public function shouldCreateNewUserWhenUsernameValid()
     {
-        $userRepository    = new UserRepositoryDummy();
-        $usernameValidator = new UsernameValidatorValidStub();
+        $userRepository    = new UserRepositoryEmptyStub();
+        $usernameValidator = new UsernameValidator($userRepository);
         $userNotifier      = new UserNotifierDummy();
-        $username          = 'username';
+        $username          = 'username123';
         $plainPassword     = 'password';
         $email             = 'email@email.com';
 

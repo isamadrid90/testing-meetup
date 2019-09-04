@@ -5,7 +5,7 @@ namespace Test\Stub;
 use DoublesMeetup\UsernameValidator;
 use DoublesMeetup\UserRepository;
 
-class UsernameValidatorValidStub implements UsernameValidator
+class UsernameValidatorValidStub extends UsernameValidator
 {
     public function validate(string $username): bool
     {

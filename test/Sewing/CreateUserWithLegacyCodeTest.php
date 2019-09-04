@@ -11,13 +11,15 @@ class CreateUserWithLegacyCodeTest extends TestCase
     /**
      * @test
      */
-    public function should_create_user_with_legacy_code()
+    public function shouldCreateUserWithLegacyCode()
     {
+        $username       = 'username';
+        $plainPassword  = 'password';
+        $email          = 'email@email.com';
+
         $userCreator = new UserCreatorLegacyWithValidUsernameTest();
+        $createdUser = $userCreator->create($username, $plainPassword, $email);
 
-        $user = $userCreator->create('username', 'password', 'email@email.com');
-
-        $this->assertEquals('username', $user->username());
-        $this->assertEquals(sha1('password'), $user->password());
+        $this->assertEquals(new User($username, $plainPassword, $email), $createdUser);
     }
 }
