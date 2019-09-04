@@ -8,6 +8,6 @@ class UserNotifierDummy implements UserNotifier
 {
     public function sendWelcomeMessage(string $email): void
     {
-        return;
+        throw new \Exception('Function sendWelcomeMessage should NOT be called');
     }
 }

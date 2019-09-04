@@ -24,7 +24,7 @@ final class UserCreator
     public function create(string $username, string $password, string $email): User
     {
         if (false === $this->usernameValidator->validate($username)) {
-            throw new \Exception(sprintf('Invalid username: %s', $username));
+            throw UsernameInvalid::withUsername($username);
         }
 
         $user = User::create($username, $password, $email);

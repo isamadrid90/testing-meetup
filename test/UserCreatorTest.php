@@ -4,6 +4,7 @@ namespace Test;
 
 use DoublesMeetup\User;
 use DoublesMeetup\UserCreator;
+use DoublesMeetup\UsernameInvalid;
 use DoublesMeetup\UsernameValidator;
 use DoublesMeetup\UserNotifier;
 use DoublesMeetup\UserRepository;
@@ -21,13 +22,33 @@ class UserCreatorTest extends TestCase
      */
     public function shouldThrowExceptionWhenUsernameInvalid()
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(UsernameInvalid::class);
 
         $userRepository    = new UserRepositoryDummy();
         $usernameValidator = new UsernameValidatorInvalidStub();
         $userNotifier      = new UserNotifierDummy();
         $userCreator       = new UserCreator($usernameValidator, $userRepository, $userNotifier);
 
+        $userCreator->create('username', 'password', 'email@email.com');
+    }
+
+    /**
+     * @test
+     */
+    public function shouldThrowExceptionWhenUsernameInvalidWithProphecy()
+    {
+        $this->expectException(UsernameInvalid::class);
+
+        $userRepository    = $this->prophesize(UserRepository::class);
+        $userNotifier      = $this->prophesize(UserNotifier::class);
+        $usernameValidator = $this->prophesize(UsernameValidator::class);
+        $usernameValidator->validate(Argument::any())->willReturn(false);
+
+        $userCreator = new UserCreator(
+            $usernameValidator->reveal(),
+            $userRepository->reveal(),
+            $userNotifier->reveal()
+        );
         $userCreator->create('username', 'password', 'email@email.com');
     }
 

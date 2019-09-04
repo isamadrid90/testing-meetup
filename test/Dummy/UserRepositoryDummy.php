@@ -7,10 +7,9 @@ use DoublesMeetup\UserRepository;
 
 class UserRepositoryDummy implements UserRepository
 {
-
     public function save(User $user): void
     {
-        return;
+        throw new \Exception('Function save should NOT be called');
     }
 
     public function findByUsername(string $username): ?User
