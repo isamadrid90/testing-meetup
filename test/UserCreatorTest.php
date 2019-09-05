@@ -67,7 +67,7 @@ class UserCreatorTest extends TestCase
         $userCreator = new UserCreator($usernameValidator, $userRepository, $userNotifier);
         $createdUser = $userCreator->create($username, $plainPassword, $email);
 
-        $this->assertEquals(new User($username, $plainPassword, $email), $createdUser);
+        $this->assertEquals(User::create($username, $plainPassword, $email), $createdUser);
     }
 
     /**
@@ -90,7 +90,7 @@ class UserCreatorTest extends TestCase
         );
         $createdUser = $userCreator->create($username, $plainPassword, $email);
 
-        $this->assertEquals(new User($username, $plainPassword, $email), $createdUser);
+        $this->assertEquals(User::create($username, $plainPassword, $email), $createdUser);
     }
 
 

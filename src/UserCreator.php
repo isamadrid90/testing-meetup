@@ -19,7 +19,7 @@ final class UserCreator
     }
 
     /**
-     * @throws \Exception
+     * @throws UsernameInvalid
      */
     public function create(string $username, string $password, string $email): User
     {

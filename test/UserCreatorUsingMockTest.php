@@ -4,8 +4,11 @@ namespace Test;
 
 use DoublesMeetup\User;
 use DoublesMeetup\UserCreator;
+use DoublesMeetup\UsernameValidator;
 use DoublesMeetup\UserNotifier;
+use DoublesMeetup\UserRepository;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 use Test\Dummy\UserRepositoryDummy;
 use Test\Stub\UsernameValidatorValidStub;
 
@@ -16,17 +19,18 @@ class UserCreatorUsingMockTest extends TestCase
      */
     public function shouldCreateNewUserWhenUsernameValid()
     {
-        $userRepository    = new UserRepositoryDummy();
-        $usernameValidator = new UsernameValidatorValidStub();
-        $userNotifier      = new UserNotifierMock();
         $username          = 'username';
         $plainPassword     = 'password';
         $email             = 'email@email.com';
 
+        $userRepository    = new UserRepositoryDummy();
+        $usernameValidator = new UsernameValidatorValidStub();
+        $userNotifier      = new UserNotifierMock();
+
         $userCreator = new UserCreator($usernameValidator, $userRepository, $userNotifier);
         $createdUser = $userCreator->create($username, $plainPassword, $email);
 
-        $this->assertEquals(new User($username, $plainPassword, $email), $createdUser);
+        $this->assertEquals(User::create($username, $plainPassword, $email), $createdUser);
         $this->assertTrue($userNotifier->verify());
     }
 
@@ -35,17 +39,18 @@ class UserCreatorUsingMockTest extends TestCase
      */
     public function shouldCreateNewUserWhenUsernameValidWithProphecy()
     {
-        $userRepository    = new UserRepositoryDummy();
-        $usernameValidator = new UsernameValidatorValidStub();
+        $userRepository    = $this->prophesize(UserRepository::class);
         $userNotifier      = $this->prophesize(UserNotifier::class);
+        $usernameValidator = $this->prophesize(UsernameValidator::class);
+        $usernameValidator->validate(Argument::any())->willReturn(true);
         $username          = 'username';
         $plainPassword     = 'password';
         $email             = 'email@email.com';
         $userNotifier->sendWelcomeMessage($email)->shouldBeCalled();
 
-        $userCreator = new UserCreator($usernameValidator, $userRepository, $userNotifier->reveal());
+        $userCreator = new UserCreator($usernameValidator->reveal(), $userRepository->reveal(), $userNotifier->reveal());
         $createdUser = $userCreator->create($username, $plainPassword, $email);
 
-        $this->assertEquals(new User($username, $plainPassword, $email), $createdUser);
+        $this->assertEquals(User::create($username, $plainPassword, $email), $createdUser);
     }
 }

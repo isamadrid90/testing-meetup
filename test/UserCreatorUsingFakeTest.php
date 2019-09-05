@@ -1,4 +1,5 @@
 <?php
+
 namespace Test;
 
 
@@ -13,16 +14,18 @@ class UserCreatorUsingFakeTest extends TestCase
     /** @test */
     public function shouldCreateNewUserWhenUsernameValidFake()
     {
-        $userRepository = new UserRepositoryInMemory();
+        $userRepository    = new UserRepositoryInMemory();
         $usernameValidator = new UsernameValidatorValidStub();
-        $userNotifier = new UserNotifierDummy();
-        $userCreator = new UserCreator($usernameValidator, $userRepository, $userNotifier);
-        $userCreator->create('username', 'password', 'email@email.com');
+        $userNotifier      = new UserNotifierDummy();
+        $username          = 'username';
+        $plainPassword     = 'password';
+        $email             = 'email@email.com';
+
+        $userCreator    = new UserCreator($usernameValidator, $userRepository, $userNotifier);
+        $userCreator->create($username, $plainPassword, $email);
 
         $createdUser = $userRepository->findByUsername('username');
 
-        $this->assertInstanceOf(User::class, $createdUser);
-        $this->assertEquals('username', $createdUser->username());
-        $this->assertEquals(sha1('password'), $createdUser->password());
+        $this->assertEquals(User::create($username, $plainPassword, $email), $createdUser);
     }
 }

@@ -9,7 +9,7 @@ class UserRepositoryDummy implements UserRepository
 {
     public function save(User $user): void
     {
-        throw new \Exception('Function save should NOT be called');
+        return;
     }
 
     public function findByUsername(string $username): ?User
