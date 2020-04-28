@@ -4,6 +4,7 @@ namespace Test;
 
 use DoublesMeetup\User;
 use DoublesMeetup\UserCreator;
+use DoublesMeetup\UsernameValidator;
 use PHPUnit\Framework\TestCase;
 use Test\Fake\UserRepositoryInMemory;
 use Test\Stub\UsernameValidatorValidStub;
@@ -14,7 +15,7 @@ class UserCreatorUsingFakeTest extends TestCase
     public function shouldCreateNewUserWhenUsernameValidFake()
     {
         $userRepository = new UserRepositoryInMemory();
-        $usernameValidator = new UsernameValidatorValidStub();
+        $usernameValidator = new UsernameValidator($userRepository);
         $userNotifier = new UserNotifierDummy();
         $userCreator = new UserCreator($usernameValidator, $userRepository, $userNotifier);
         $userCreator->create('username', 'password', 'email@email.com');

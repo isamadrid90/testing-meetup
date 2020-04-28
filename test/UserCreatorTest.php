@@ -9,9 +9,6 @@ use DoublesMeetup\UserNotifier;
 use DoublesMeetup\UserRepository;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Test\Dummy\UserRepositoryDummy;
-use Test\Stub\UsernameValidatorInvalidStub;
-use Test\Stub\UsernameValidatorValidStub;
 use Test\Stub\UserRepositoryEmptyStub;
 use Test\Stub\UserRepositoryNotEmptyStub;
 
@@ -25,10 +22,10 @@ class UserCreatorTest extends TestCase
     {
         $this->expectException(\Exception::class);
 
-        $userRepository    = new UserRepositoryEmptyStub();
+        $userRepository = new UserRepositoryEmptyStub();
         $usernameValidator = new UsernameValidator($userRepository);
-        $userNotifier      = new UserNotifierDummy();
-        $userCreator       = new UserCreator($usernameValidator, $userRepository, $userNotifier);
+        $userNotifier = new UserNotifierDummy();
+        $userCreator = new UserCreator($usernameValidator, $userRepository, $userNotifier);
 
         $userCreator->create('user$name', 'password', 'email@email.com');
     }
@@ -40,10 +37,10 @@ class UserCreatorTest extends TestCase
     {
         $this->expectException(\Exception::class);
 
-        $userRepository    = new UserRepositoryNotEmptyStub();
+        $userRepository = new UserRepositoryNotEmptyStub();
         $usernameValidator = new UsernameValidator($userRepository);
-        $userNotifier      = new UserNotifierDummy();
-        $userCreator       = new UserCreator($usernameValidator, $userRepository, $userNotifier);
+        $userNotifier = new UserNotifierDummy();
+        $userCreator = new UserCreator($usernameValidator, $userRepository, $userNotifier);
 
         $userCreator->create('username', 'password', 'email@email.com');
     }
@@ -53,12 +50,12 @@ class UserCreatorTest extends TestCase
      */
     public function shouldCreateNewUserWhenUsernameValid()
     {
-        $userRepository    = new UserRepositoryEmptyStub();
+        $userRepository = new UserRepositoryEmptyStub();
         $usernameValidator = new UsernameValidator($userRepository);
-        $userNotifier      = new UserNotifierDummy();
-        $username          = 'username123';
-        $plainPassword     = 'password';
-        $email             = 'email@email.com';
+        $userNotifier = new UserNotifierDummy();
+        $username = 'username123';
+        $plainPassword = 'password';
+        $email = 'email@email.com';
 
         $userCreator = new UserCreator($usernameValidator, $userRepository, $userNotifier);
         $createdUser = $userCreator->create($username, $plainPassword, $email);
@@ -71,13 +68,13 @@ class UserCreatorTest extends TestCase
      */
     public function shouldCreateNewUserWhenUsernameValidWithProphecy()
     {
-        $userRepository    = $this->prophesize(UserRepository::class);
-        $userNotifier      = $this->prophesize(UserNotifier::class);
+        $userRepository = $this->prophesize(UserRepository::class);
+        $userNotifier = $this->prophesize(UserNotifier::class);
         $usernameValidator = $this->prophesize(UsernameValidator::class);
         $usernameValidator->validate(Argument::any())->willReturn(true);
-        $username          = 'username';
-        $plainPassword     = 'password';
-        $email             = 'email@email.com';
+        $username = 'username';
+        $plainPassword = 'password';
+        $email = 'email@email.com';
 
         $userCreator = new UserCreator(
             $usernameValidator->reveal(),

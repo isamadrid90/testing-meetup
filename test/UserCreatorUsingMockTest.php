@@ -17,7 +17,7 @@ class UserCreatorUsingMockTest extends TestCase
     public function shouldCreateNewUserWhenUsernameValid()
     {
         $userRepository    = new UserRepositoryDummy();
-        $usernameValidator = new UsernameValidatorValidStub();
+        $usernameValidator = new UsernameValidatorValidStub($userRepository);
         $userNotifier      = new UserNotifierMock();
         $username          = 'username';
         $plainPassword     = 'password';
@@ -36,7 +36,7 @@ class UserCreatorUsingMockTest extends TestCase
     public function shouldCreateNewUserWhenUsernameValidWithProphecy()
     {
         $userRepository    = new UserRepositoryDummy();
-        $usernameValidator = new UsernameValidatorValidStub();
+        $usernameValidator = new UsernameValidatorValidStub($userRepository);
         $userNotifier      = $this->prophesize(UserNotifier::class);
         $username          = 'username';
         $plainPassword     = 'password';
